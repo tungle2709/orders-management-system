@@ -28,8 +28,7 @@ public class HomeController {
     @PostMapping("/insertOrders")
     public String insertOrders(Model model, @ModelAttribute Orders orders) {
         restTemplate.postForEntity("http://localhost:8080/orders", orders, String.class);
-        model.addAttribute("orders", orders);
-        return "index";
+        return "redirect:/";
     }
 
     @GetMapping("/insertOrders")
