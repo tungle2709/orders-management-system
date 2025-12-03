@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Orders Management System</title>
+    <script src="../static/js/script.js" th:src="@{/js/script.js}"></script>
+</head>
+<body>
+    <h1>Orders Management System</h1>
+
+    <h2>Orders List</h2>
+    <table border="1">
+        <tr>
+            <th>Item(s)</th>
+            <th>Date (Sorted)</th>
+            <th>Delete Order</th>
+            <th>Edit Order</th>
+        </tr>
+        <tr th:each="ord: ${ordersList}">
+            <td>
+                <h4>
+                    <a href="#" th:onclick="'getOrders(' + ${ord.orderId} + ')'" th:text="${ord.items}">Orders</a>
+                    <div th:id="'orders' + ${ord.orderId}"></div>
+                </h4>
+            </td>
+            <td><h4 th:text="${ord.localD}"></h4></td>
+            <td><a th:href="@{/deleteOrders/}+${ord.orderId}">Delete</a></td>
+            <td><a th:href="@{/editOrders/}+${ord.orderId}">Edit</a></td>
+        </tr>
+    </table>
+
+    <h2>Fill in the form</h2>
+    <form method="post" th:action="@{/insertOrders}" th:object="${orders}">
+        <input type="hidden" th:field="*{orderId}"/><br>
+        Items: <input type="text" th:field="*{items}" required/><br>
+        Date: <input type="date" th:field="*{localD}"/><br>
+        Time: <input type="time" th:field="*{localT}"/><br>
+        Quantity: <input type="number" th:field="*{quantity}"/><br>
+        Do you have this item?: <input type="checkbox" th:field="*{onHand}"/><br>
+        <input type="submit" value="Add Values!"/>
+    </form>
+</body>
+</html>
